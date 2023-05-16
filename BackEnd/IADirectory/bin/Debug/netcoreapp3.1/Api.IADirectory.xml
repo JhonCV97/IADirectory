@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Api.IADirectory</name>
+    </assembly>
+    <members>
+        <member name="M:Api.IADirectory.Controllers.AuthTokenController.Authentication(Application.Auth.Commands.PostLoginCommand)">
+            <summary>
+            Método que se encarga de generar el token de acceso.
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.IADirectory.Controllers.UserController.PostUser(Application.Cqrs.User.Commands.PostUserCommand)">
+            <summary>
+            Agrega un nuevo usuario en la base de datos
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
