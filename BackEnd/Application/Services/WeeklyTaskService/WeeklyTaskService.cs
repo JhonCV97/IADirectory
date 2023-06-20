@@ -40,8 +40,8 @@ namespace Application.Services.WeeklyTaskService
                 _logger.LogInformation("WeeklyTaskService is running. " + DateTime.Now);
 
                 // Esperar 1 minuto antes de ejecutar nuevamente
-                //await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
-                await Task.Delay(TimeSpan.FromDays(8), stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+                //await Task.Delay(TimeSpan.FromDays(8), stoppingToken);
             }
 
             _logger.LogInformation("WeeklyTaskService is stopping.");
