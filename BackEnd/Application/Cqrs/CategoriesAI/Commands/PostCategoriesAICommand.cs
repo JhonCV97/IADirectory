@@ -2,6 +2,7 @@
 using Application.DTOs.CategoriesAI;
 using Application.Interfaces.CategoriesAI;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Application.Cqrs.CategoriesAI.Commands
 {
     public class PostCategoriesAICommand : IRequest<ApiResponse<CategoriesAIDto>>
     {
+        public IFormFile Image { get; set; }
         public CategoriesAIPostDto CategoriesAIPostDto { get; set; }
     }
 

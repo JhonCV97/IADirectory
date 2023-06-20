@@ -1,0 +1,16 @@
+.title{
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold !important;
+    text-align: center;
+}
+
+.paragraph{
+    padding-left: 10%;
+    padding-right: 10%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    color: white;
+    text-align: justify;
+    margin-bottom: 5%;
+}

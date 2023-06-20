@@ -2,6 +2,7 @@
 using Application.DTOs.ArtificialIntelligence;
 using Application.Interfaces.ArtificialIntelligence;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Application.Cqrs.ArtificialIntelligence.Commands
 {
     public class PostArtificialIntelligenceCommand : IRequest<ApiResponse<ArtificialIntelligenceDto>>
     {
+        public IFormFile Image { get; set; }
         public ArtificialIntelligencePostDto ArtificialIntelligencePostDto { get; set; }
     }
     public class PostCategoriesAICommandHandler : IRequestHandler<PostArtificialIntelligenceCommand, ApiResponse<ArtificialIntelligenceDto>>

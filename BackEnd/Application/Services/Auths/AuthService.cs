@@ -60,8 +60,12 @@ namespace Application.Services.Auths
                     .ProjectTo<UserDto>(_autoMapper.ConfigurationProvider)
                     .FirstOrDefaultAsync();
 
-            var isValid = _passwordHasher.Check(userDto.Password, auth.Password);
-
+            var isValid = false;
+            if (userDto != null)
+            {
+                isValid = _passwordHasher.Check(userDto.Password, auth.Password);
+            }
+            
             if (!isValid)
             {
                 throw new UnAuthorizeException("Usuario o contraseña incorrecta");

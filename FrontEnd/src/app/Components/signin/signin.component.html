@@ -2,23 +2,23 @@
 <div class="row divlogin">
   <div class="col s10 m6 l4 offset-s1 offset-m3 offset-l4 divcardline">
 
-    <form action="modules/logging-in.php" method="POST">
+    <form [formGroup]="formForSubmit" (ngSubmit)="login()">
       <div class="input-field col s12 formmg" style="margin-top: 45px; margin-bottom:0px">
         <i class="material-icons prefix">account_circle</i>
-        <input id="icon_prefix" name="user" type="text" class="validate" required minlength="5">
+        <input id="icon_prefix" formControlName="Email" name="user" type="text" class="validate" required minlength="5">
         <label for="icon_prefix">Usuario</label>
       </div>
 
       <div class="input-field col s12">
         <i class="material-icons prefix">lock_outline</i>
-        <input id="icon_prefix2" type="password" name="password" class="validate" required minlength="6">
+        <input id="icon_prefix2" formControlName="Password" type="password" name="password" class="validate" required minlength="6">
         <label for="icon_prefix2">Contraseña</label>
       </div>
 
       <div class="input-field col s12 divbt">
         <button class="waves-effect waves-light btn deep-purple darken-4 btlg1" type="submit"
           name="bt-send">Iniciar</button>
-        <a href="views/register.php" class="waves-effect waves-light btn grey btlg2">Registrarme</a>
+        <a href="/register" class="waves-effect waves-light btn grey btlg2">Registrarme</a>
       </div>
 
       <div class="input-field col s12 divbt">
@@ -44,9 +44,32 @@
       </div>
 
       <div class="input-field col s12">
-        <a href="views/recover.php" class="right">¿Olvidó su contraseña?</a>
+        <a class="right modal-trigger" href="#modal5" (click)="HiddenInfo()">¿Olvidó su contraseña?</a>
       </div>
 
     </form>
+  </div>
+</div>
+
+
+<div id="modal5" class="modal">
+  <div class="modal-content">
+      <h4 class="title-add-category center" style="font-weight: bold;">Recuperar Contraseña</h4>
+      <p>Coloque el correo electronico que tiene registrado para poder cambiar su contraseña</p>
+      <div style="margin-bottom: 5%;">
+          <form [formGroup]="formSubmit" (ngSubmit)="SendEmail()">
+            <div class="row">
+                <div class="input-field col s12 formmg">
+                    <input id="icon_prefix3"  [(ngModel)]="inputEmail" formControlName="Email" name="title" type="email" class="validate" required minlength="5">
+                    <label for="icon_prefix3">Correo Electronico</label>
+                </div>
+            </div>
+
+            <div class="input-field col s12 divbt">
+                <button id="CategoriesAdd" class="waves-effect waves-light btn deep-purple darken-4 btlg1" type="submit"
+                    name="bt-send">Enviar</button>
+            </div>
+        </form>
+      </div>
   </div>
 </div>

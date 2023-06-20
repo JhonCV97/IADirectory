@@ -5,11 +5,13 @@ using Application.Interfaces.ArtificialIntelligence;
 using Application.Interfaces.Auths;
 using Application.Interfaces.CategoriesAI;
 using Application.Interfaces.User;
+using Application.Interfaces.Email;
 using Application.Options;
 using Application.Services.ArtificialIntelligence;
 using Application.Services.Auths;
 using Application.Services.CategoriesAI;
 using Application.Services.User;
+using Application.Services.Email;
 using Domain.Interfaces;
 using Infra.Data.Context;
 using Infra.Data.Repository;
@@ -33,6 +35,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Interfaces.SendEmail;
+using Application.Services.SendEmail;
+using Application.Services.WeeklyTaskService;
+using Application.Interfaces.SaveImage;
+using Application.Services.SaveImage;
+using Microsoft.Extensions.FileProviders;
 
 namespace IADirectory
 {
@@ -65,6 +73,10 @@ namespace IADirectory
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICategoriesAIService, CategoriesAIService>();
             services.AddScoped<IArtificialIntelligenceService, ArtificialIntelligenceService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ISendEmailService, SendEmailService>();
+            services.AddScoped<ISaveImage, SaveImage>();
+            services.AddHostedService<WeeklyTaskService>();
             services.AddCors();
 
             services.AddControllersWithViews()
@@ -119,6 +131,12 @@ namespace IADirectory
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources", "PublicFiles", "Images")),
+                RequestPath = "/Images"
+            });
 
             app.UseCors(x => x
                 .AllowAnyMethod()

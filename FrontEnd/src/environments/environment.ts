@@ -7,5 +7,6 @@ export const environment = {
         storageBucket: "loginnetcore3.appspot.com",
         messagingSenderId: "609720055206",
         appId: "1:609720055206:web:5363a64ba9a686d7c4cb67"
-    }
+    },
+    url_BackEnd: "https://localhost:44340"
 };

@@ -25,7 +25,7 @@ namespace Infra.Data.Repository
             return _entities;
         }
 
-        public async Task<T> GetById(Guid id)
+        public async Task<T> GetById(int id)
         {
             return await _entities.FindAsync(id);
         }

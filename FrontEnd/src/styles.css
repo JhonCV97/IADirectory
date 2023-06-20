@@ -65,6 +65,11 @@ input:focus {
     box-shadow: 0 1px 0 0 #311b92 !important;
 }
 
+textarea:focus{
+    border-bottom: 1px solid #311b92 !important;
+    box-shadow: 0 1px 0 0 #311b92 !important;
+}
+
 .round-image{
     margin-right: 7%;
     border-radius: 50%;
@@ -98,11 +103,11 @@ input:focus {
     color: white;
 }
 
-footer {
+/*footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-}
+}*/
 
 @media only screen and (max-width: 990px) {
     .Logo{

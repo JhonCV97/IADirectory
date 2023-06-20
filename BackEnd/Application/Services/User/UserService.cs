@@ -1,6 +1,11 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Response;
+using Application.Cqrs.CategoriesAI.Commands;
+using Application.Cqrs.CategoriesAI.Queries;
 using Application.Cqrs.User.Commands;
+using Application.Cqrs.User.Queries;
+using Application.DTOs.CategoriesAI;
+using Application.DTOs.Email;
 using Application.DTOs.User;
 using Application.Interfaces.User;
 using AutoMapper;
@@ -46,6 +51,26 @@ namespace Application.Services.User
             return response;
         }
 
+        public async Task<ApiResponse<UserDto>> GetUsersById(GetUsersQueryById request)
+        {
+            var response = new ApiResponse<UserDto>();
+
+            try
+            {
+                response.Data = _autoMapper.Map<UserDto>(await _unitOfWork.UserRepository.GetById(request.Id));
+                response.Result = true;
+                response.Message = "OK";
+            }
+            catch (Exception ex)
+            {
+                response.Result = false;
+                response.Message = $"Error al consultar el registro, consulte con el administrador. {ex.Message} ";
+            }
+
+            return response;
+        }
+
+
         public async Task<ApiResponse<UserDto>> AddUser(PostUserCommand request)
         {
             var response = new ApiResponse<UserDto>();
@@ -75,5 +100,87 @@ namespace Application.Services.User
 
             return response;
         }
+
+        public async Task<ApiResponse<UserDto>> UpdateUser(PutUserCommand request)
+        {
+            var response = new ApiResponse<UserDto>();
+            try
+            {
+                var ExitsUser = await _unitOfWork.UserRepository.Get()
+                                                                .Where(x => x.Login == request.UserDto.Email)
+                                                                .AsNoTracking()
+                                                                .FirstOrDefaultAsync();
+
+                if (ExitsUser == null)
+                {
+                    throw new BadRequestException("El correo no esta registrado verifique por favor");
+                }
+
+                if (request.UserDto.Id == 0)
+                {
+                    request.UserDto.Id = ExitsUser.Id;
+                }
+
+                if (request.UserDto.Name == "")
+                {
+                    request.UserDto.Name = ExitsUser.Name;
+                }
+
+                if (request.UserDto.Lastname == "")
+                {
+                    request.UserDto.Lastname = ExitsUser.Lastname;
+                }
+
+                if (request.UserDto.RoleId == 0)
+                {
+                    request.UserDto.RoleId = ExitsUser.RoleId;
+                }
+
+
+                request.UserDto.Password = _passwordHasher.Hash(request.UserDto.Password);
+                var userDto = new UserDto
+                {
+                    Id = request.UserDto.Id,
+                    Email = request.UserDto.Email,
+                    Lastname= request.UserDto.Lastname,
+                    Name= request.UserDto.Name, 
+                    Password= request.UserDto.Password,
+                    Login= request.UserDto.Login,
+                    RoleId= request.UserDto.RoleId
+                };
+
+                response.Data = _autoMapper.Map<UserDto>(await _unitOfWork.UserRepository.Put(_autoMapper.Map<Domain.Models.User>(userDto)));
+                response.Result = true;
+                response.Message = "OK";
+            }
+            catch (Exception ex)
+            {
+                response.Result = false;
+                response.Message = $"Error al actualizar el registro, consulte con el administrador. {ex.Message} ";
+                throw;
+            }
+            return response;
+        }
+
+        public async Task<ApiResponse<bool>> DeleteUser(DeleteUserCommand request)
+        {
+            var response = new ApiResponse<bool>();
+            try
+            {
+                var CategoriesAI = await _unitOfWork.UserRepository.GetById(request.Id);
+
+                response.Data = await _unitOfWork.UserRepository.Delete(CategoriesAI);
+                response.Result = true;
+                response.Message = "Ok";
+            }
+            catch (Exception ex)
+            {
+                response.Result = false;
+                response.Message = $"Error al eliminar el registro, consulte con el administrador. {ex.Message} ";
+                throw;
+            }
+            return response;
+        }
+        
     }
 }

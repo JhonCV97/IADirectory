@@ -1,0 +1,91 @@
+<h2 class="title">Inteligencia Artificial {{NameCategory}}</h2>
+
+<div class="row">
+    <div class="col s12 m4" *ngFor="let intelligenceArtificial of IAForCategory">
+        <div *ngIf="roleId == 1" style="text-align: right; margin-right: 13%;">
+            <img src="../../assets/edit.png" class="img-card img-btn modal-trigger" data-target="modal2" (click)="OpenModal(0,'', intelligenceArtificial.id)" (click)="HiddenBtn('none', 'block')" (click)="editAI(intelligenceArtificial.id)" id="edit-btn"> 
+        </div>
+
+        <div *ngIf="roleId == 1" style="text-align: right; margin-right: 5%;">
+            <img src="../../assets/delete.png" class="img-card img-btn modal-trigger" data-target="modal3" (click)="OpenModal(1, intelligenceArtificial.name, intelligenceArtificial.id)" id="delete-btn">
+        </div>
+        
+        <div class="card large">
+            <div class="card-image">
+                <img src="{{url}}/Images/{{intelligenceArtificial.image}}" class="img-card">
+            </div>
+            <div class="card-content">
+                <span class="card-title">{{intelligenceArtificial.name}}</span>
+                <p>{{intelligenceArtificial.description}}</p>
+            </div>
+            <div class="card-action">
+                <a class="btn-redirect" (click)="getIntelligenceArtificial(intelligenceArtificial.name)" [routerLink]="['/ViewAI', intelligenceArtificial.name]">Ver mas sobre {{intelligenceArtificial.name}}</a>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="roleId == 1" class="col s12 m4 div-add-btn">
+        <div class="div-flex-btn">
+            <img src="../../assets/add_btn.png" class="img-btn-add modal-trigger" data-target="modal2" (click)="OpenModal(0, '', '')" (click)="HiddenBtn('block', 'none')">
+        </div>
+    </div>
+</div>
+
+
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <h4 class="title-add-category">Inteligencia Artificial</h4>
+        <form [formGroup]="formForSubmit" (ngSubmit)="onFormSubmit($event)">
+            <div class="row">
+                <div class="input-field col s12 formmg">
+                    <input id="icon_prefix" name="title" [(ngModel)]="inputTitle" formControlName="Title" #title type="text" class="validate" required>
+                    <label for="icon_prefix">Titulo</label>
+                </div>
+
+                <div class="input-field col s12 formmg">
+                    <input id="icon_prefix2" name="url" [(ngModel)]="inputUrl" formControlName="Url" type="text" class="validate" required>
+                    <label for="icon_prefix2">Url</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <textarea id="textarea1" [(ngModel)]="inputDescription" formControlName="Description" #textarea class="materialize-textarea"></textarea>
+                    <label for="textarea1">Descripcion</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="file-field input-field">
+                    <div class="btn deep-purple darken-4">
+                        <span>Archivo</span>
+                        <input type="file" (change)="onFileSelected($event)" formControlName="Image">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="input-field col s12 divbt">
+                <button id="AIAdd" class="waves-effect waves-light btn deep-purple darken-4 btlg1" type="submit"
+                    name="btn-send">Agregar</button>
+            </div>
+            <div class="input-field col s12 divbt">
+                <button id="AISave" class="waves-effect waves-light btn deep-purple darken-4 btlg1" type="submit"
+                    name="btn-update">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <h4 class="title-add-category" style="color: red; font-weight: bold;">Desea eliminar la Inteligencia Artificial "{{nameSelected}}"</h4>
+        <div style="margin-bottom: 5%;">
+            <h5 style="text-align: center;">Esta a punto de eliminar la informacion de la inteligencia artificial "{{nameSelected}}". ¿Desea continuar?</h5>
+        </div>
+
+        <div class="input-field col s12 divbt">
+            <button class="waves-effect waves-light btn red accent-4 btlg1" type="submit"
+                name="bt-send" (click)="deleteAI()">Eliminar</button>
+        </div>
+    </div>
+</div>

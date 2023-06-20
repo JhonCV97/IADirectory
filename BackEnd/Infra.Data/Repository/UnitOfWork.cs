@@ -28,7 +28,6 @@ namespace Infra.Data.Repository
             return _ctx.Database.GetDbConnection().ConnectionString;
         }
 
-
         public void Dispose()
         {
             if (_ctx != null)
@@ -46,6 +45,5 @@ namespace Infra.Data.Repository
         {
             await _ctx.SaveChangesAsync();
         }
-
     }
 }

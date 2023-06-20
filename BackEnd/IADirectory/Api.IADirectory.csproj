@@ -33,5 +33,9 @@
     <ProjectReference Include="..\Infra.Data\Infra.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\PublicFiles\Images\" />
+  </ItemGroup>
+
 
 </Project>
